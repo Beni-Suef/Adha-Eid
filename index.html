@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>تهنئة العيد مقدمة من محافظة بني سويف</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+
+body{
+    margin:0;
+    font-family:'Aref Ruqaa', serif;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:100vh;
+
+body{
+    margin:0;
+    padding:0;
+    background-image: url('backgr.jpg');
+    background-size: cover;       /* تغطية كاملة للشاشة */
+    background-position: center;  /* توسيط الصورة */
+    background-repeat: no-repeat; /* منع التكرار */
+    background-attachment: fixed; /* تثبيت الخلفية */
+}
+
+
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.45);
+    z-index:-1;
+}
+
+.container{
+    width:90%;
+    max-width:700px;
+    background:rgba(255,255,255,0.92);
+    padding:25px;
+    border-radius:20px;
+    box-shadow:0 0 20px rgba(0,0,0,0.25);
+    text-align:center;
+    backdrop-filter:blur(4px);
+}
+
+h1{
+    color:#8b6b1f;
+    margin-bottom:25px;
+    font-size:40px;
+}
+
+label{
+    font-size:24px;
+    color:#444;
+}
+
+input{
+    width:80%;
+    padding:14px;
+    margin-top:15px;
+    border-radius:12px;
+    border:1px solid #ccc;
+    font-size:22px;
+    font-family:'Aref Ruqaa', serif;
+    text-align:center;
+}
+
+button{
+    margin-top:20px;
+    padding:14px 30px;
+    border:none;
+    border-radius:14px;
+    background:#b68b2c;
+    color:white;
+    font-size:22px;
+    cursor:pointer;
+    font-family:'Aref Ruqaa', serif;
+    transition:0.3s;
+}
+
+button:hover{
+    background:#8b6b1f;
+}
+
+canvas{
+    display:none;
+    width:100%;
+    margin-top:30px;
+    border-radius:20px;
+}
+
+#downloadBtn{
+    display:none;
+    background:#0f8a4b;
+}
+
+#downloadBtn:hover{
+    background:#066636;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>تهنئة العيد مقدمة من محافظة بني سويف</h1>
+
+    <label>اكتب اسمك</label>
+
+    <br>
+
+    <input type="text" id="name" placeholder="مثال: محمد">
+
+    <br>
+
+    <button onclick="generateImage()">
+        توليد التهنئة
+    </button>
+
+    <br>
+
+    <canvas id="canvas"></canvas>
+
+    <br>
+
+    <button id="downloadBtn" onclick="downloadImage()">
+        تحميل الصورة
+    </button>
+
+</div>
+
+<script>
+
+function generateImage(){
+
+    const name = document.getElementById("name").value.trim();
+
+    const canvas = document.getElementById("canvas");
+    const ctx = canvas.getContext("2d");
+
+    const image = new Image();
+
+    // صورة التصميم الأساسية
+    image.src = "Ahmed.jpg";
+
+    image.onload = function(){
+
+        canvas.style.display = "block";
+
+        canvas.width = image.width;
+        canvas.height = image.height;
+
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        // رسم الصورة
+        ctx.drawImage(image, 0, 0);
+
+        // إعدادات النص
+        ctx.textAlign = "center";
+
+        ctx.shadowColor = "rgba(0,0,0,0.8)";
+        ctx.shadowBlur = 12;
+
+        // الجملة الرئيسية
+        ctx.fillStyle = "white";
+        ctx.font = "bold 90px Aref Ruqaa";
+
+        ctx.fillText(
+            "عيدكم مبارك وكل عام وأنتم بخير",
+            canvas.width / 2,
+            canvas.height / 2
+        );
+
+        // الاسم
+        ctx.font = "bold 80px Aref Ruqaa";
+        ctx.fillStyle = "#ffe082";
+
+        ctx.fillText(
+            name,
+            canvas.width / 2,
+            (canvas.height / 2) + 120
+        );
+
+        // التوقيع
+        ctx.font = "bold 35px Aref Ruqaa";
+        ctx.fillStyle = "white";
+
+        ctx.fillText(
+            "محافظة بني سويف تهنئكم بعيد الأضحى المبارك ",
+            canvas.width / 2,
+            canvas.height - 90
+        );
+
+        // إظهار زر التحميل
+        document.getElementById("downloadBtn").style.display = "inline-block";
+    }
+}
+
+function downloadImage(){
+
+    const canvas = document.getElementById("canvas");
+
+    const name =
+        document.getElementById("name").value.trim() || "eid-greeting";
+
+    const link = document.createElement("a");
+
+    // اسم الملف بالاسم المكتوب
+    link.download = `${name}.jpg`;
+
+    // حفظ بصيغة JPG
+    link.href = canvas.toDataURL("image/jpeg", 1.0);
+
+    link.click();
+}
+
+</script>
+
+</body>
+</html>
